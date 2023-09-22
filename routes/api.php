@@ -19,8 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/products/{category_id?}',[ApiEcommerceController::class,'products'])->name('products');
-//Route::get('/products/{category_id?}', function () {return view('e-commerce.ejercicio');});
+//Route::get('/products/{category_id?}',[ApiEcommerceController::class,'products'])->name('products');
+Route::get('/products/{category_id?}', function () {return view('e-commerce.ejercicio');});
 
 Route::get('/categories', [ApiEcommerceController::class,'categories'])->name('api_categorie');
 
