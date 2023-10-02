@@ -10,7 +10,8 @@ use App\Models\Contact;
 use App\Models\Review;
 use App\Mail\mail_contact;
 use Illuminate\Support\Facades\Mail;
- 
+use Illuminate\Support\Facades\Http;
+
 
 class SiteController extends Controller
 {
@@ -36,8 +37,8 @@ class SiteController extends Controller
                 'review.required' => 'Please type your review.',
 
             ]);
-            
-        
+
+
             $review = new Review();
             $review->ratting=$request->input("ratting");
             $review->name=$request->input("name");
@@ -60,7 +61,7 @@ class SiteController extends Controller
         $reviews=Review::where('id_producto',$id)->get();
 
         return view('e-commerce.product-detail',compact('categories','products','products_cat','reviews'));
-       
+
     }
 
     public function productsByCategory()
@@ -68,7 +69,7 @@ class SiteController extends Controller
         $categories=Category::all();
         return view('e-commerce.product-by-category',compact('categories'));
     }
-    
+
 
     public function ejercicio(){
         return view('e-commerce.ejercicio');
@@ -93,8 +94,8 @@ class SiteController extends Controller
                 'message.required' => 'Please type your message.',
 
             ]);
-            
-        
+
+
             $contact = new Contact();
             $contact->name=$request->input("name");
             $contact->email=$request->input("email");
@@ -103,10 +104,10 @@ class SiteController extends Controller
             $contact->save();
             $response = Mail::to($request->input('email'))->send(new mail_contact($request->input('name'),
             $request->input('email'),$request->input('subject'),$request->input('message')));
-            
+
             return redirect()->route("contact")->with('success', 'Your contact messsage has been sent.');
         }
-        
+
         return view('contact');
     }
 
@@ -120,10 +121,16 @@ class SiteController extends Controller
         //return view('product-list',['product' => $product]);
         return view('e-commerce.product-list',compact('products','categories'));
     }
-       
+
 
     public function about(){
         $about_message="Hola, somos una empresa que se dedica al desarrollo de sofware de Sistemas de Información";
         return view('about',["about_message" => $about_message]);
+    }
+
+    public function admin_employees(){
+        $response = Http::get('http://127.0.0.1:3000/api/v1/employees');
+        $employees = $response->object();
+        return view ('e-commerce.admin_employees',compact('employees'));
     }
 }
