@@ -337,6 +337,68 @@ $(document).ready(() => {
     });
 });
 
+//mostrar ordenes
+//mostrar ordenes
+$(document).ready(() => {
+    let table;
+
+    $.ajax({
+      url: 'http://localhost:3000/api/v1/order',
+      type: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        $('#tableOrder tbody').empty();
+
+        $.each(data, function (i, item) {
+          $('#tableOrder tbody').append(
+            '<tr>' +
+            '<td>' + item.order_no + '</td>' +
+            '<td>' + item.product_name + '</td>' +
+            '<td>' + item.create_at + '</td>' +
+            '<td>' + item.price + '</td>' +
+            '<td>' + item.status + '</td>' +
+            '</tr>'
+          );
+        });
+
+        if (table) {
+          table.destroy();
+        }
+
+        table = $('#tableOrder').DataTable({
+          "footerCallback": function (row, data, start, end, display) {
+            let api = this.api();
+
+            let intVal = function (i) {
+              return typeof i === 'string'
+                ? i.replace(/[\$,]/g, '') * 1
+                : typeof i === 'number'
+                  ? i
+                  : 0;
+            };
+
+            total = api
+              .column(3) // Use 3 for the "price" column
+              .data()
+              .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+            pageTotal = api
+              .column(3, { page: 'current' })
+              .data()
+              .reduce((a, b) => intVal(a) + intVal(b), 0);
+
+            // Update footer with the desired format
+            api.column(3).footer().innerHTML =
+              'Total: $' + pageTotal.toFixed(2) + ' ( $' + total.toFixed(2) + ' total)';
+          }
+        });
+      },
+      error: function (error) {
+        console.log('Error en la llamada AJAX:', error);
+      }
+    });
+  });
+
 
 
 

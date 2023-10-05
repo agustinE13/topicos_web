@@ -31,14 +31,16 @@ Route::post('/contact', [SiteController::class, 'contact'])->name("contact_post"
 Route::get('/product-detail/{id?}/{category_id?}', [SiteController::class, 'product_detail'])->name("product_detail");
 Route::post('/product-detail/{id?}/{category_id?}', [SiteController::class, 'product_detail'])->name("product_detail_post");
 
-Route::get('/ejercicio', [SiteController::class, 'ejercicio'])->name('ejercicio');
+Route::get('/admin/ejercicio', [SiteController::class, 'ejercicio'])->name('ejercicio');
 
-Route::get('/employees', [SiteController::class, 'admin_employees'])->name('admin_employees');
+Route::get('/admin/employees', [SiteController::class, 'admin_employees'])->name('admin_employees');
 
 Route::get('/registro', [SiteController::class, 'registro'])->name('registro');
 Route::post('/registro', [SiteController::class, 'registro'])->name('registro');
 
+Route::get('/admin/showUsers',[SiteController::class, 'showUsers'])->name('showUsers');
 
+Route::get('/admin/showOrders',[SiteController::class, 'showOrders'])->name('showOrders');
 /*
 Route::get('/greeting', function () {
     return 'Hello World';

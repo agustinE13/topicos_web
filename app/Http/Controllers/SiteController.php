@@ -136,4 +136,17 @@ class SiteController extends Controller
     public function registro(){
         return view('e-commerce.registroUsuario');
     }
+
+    public function showUsers(){
+        $response = Http::get('http://127.0.0.1:3000/api/v1/users');
+        $users = $response->object();
+        return view ('e-commerce.showUsers',compact('users'));
+    }
+    public function showOrders(){
+        $response = Http::get('http://127.0.0.1:3000/api/v1/order');
+        $orders = $response->object();
+        return view ('e-commerce.showOrders',compact('orders'));
+    }
+
+
 }
