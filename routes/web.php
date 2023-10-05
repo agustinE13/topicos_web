@@ -34,6 +34,11 @@ Route::post('/product-detail/{id?}/{category_id?}', [SiteController::class, 'pro
 Route::get('/ejercicio', [SiteController::class, 'ejercicio'])->name('ejercicio');
 
 Route::get('/employees', [SiteController::class, 'admin_employees'])->name('admin_employees');
+
+Route::get('/registro', [SiteController::class, 'registro'])->name('registro');
+Route::post('/registro', [SiteController::class, 'registro'])->name('registro');
+
+
 /*
 Route::get('/greeting', function () {
     return 'Hello World';

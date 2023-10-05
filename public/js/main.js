@@ -1,6 +1,6 @@
 (function ($) {
     "use strict";
-    
+
     // Dropdown on mouse hover
     $(document).ready(function () {
         function toggleNavbarMethod() {
@@ -17,8 +17,8 @@
         toggleNavbarMethod();
         $(window).resize(toggleNavbarMethod);
     });
-    
-    
+
+
     // Back to top button
     $(window).scroll(function () {
         if ($(this).scrollTop() > 100) {
@@ -28,11 +28,11 @@
         }
     });
     $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+        $('html, body').animate({ scrollTop: 0 }, 1500, 'easeInOutExpo');
         return false;
     });
-    
-    
+
+
     // Header slider
     $('.header-slider').slick({
         autoplay: true,
@@ -41,8 +41,8 @@
         slidesToShow: 1,
         slidesToScroll: 1
     });
-    
-    
+
+
     // Product Slider 4 Column
     $('.product-slider-4').slick({
         autoplay: true,
@@ -77,8 +77,8 @@
             },
         ]
     });
-    
-    
+
+
     // Product Slider 3 Column
     $('.product-slider-3').slick({
         autoplay: true,
@@ -108,40 +108,40 @@
         ]
     });
     const stars = document.querySelectorAll('.rating i');
-                                                const ratingInput = document.getElementById('rating');
-                                            
-                                                stars.forEach((star) => {
-                                                    star.addEventListener('mouseover', () => {
-                                                        const rating = star.getAttribute('data-rating');
-                                                        highlightStars(rating);
-                                                    });
-                                            
-                                                    star.addEventListener('click', () => {
-                                                        const rating = star.getAttribute('data-rating');
-                                                        ratingInput.value = rating;
-                                                        highlightStars(rating);
-                                                    });
-                                            
-                                                    star.addEventListener('mouseout', () => {
-                                                        const currentRating = ratingInput.value;
-                                                        highlightStars(currentRating);
-                                                    });
-                                                });
-                                            
-                                                function highlightStars(rating) {
-                                                    stars.forEach((star) => {
-                                                        const starRating = star.getAttribute('data-rating');
-                                                        if (starRating <= rating) {
-                                                            star.classList.add('fas');
-                                                            star.classList.remove('far');
-                                                        } else {
-                                                            star.classList.remove('fas');
-                                                            star.classList.add('far');
-                                                        }
-                                                    });
-                                                }
-                                            
-    
+    const ratingInput = document.getElementById('rating');
+
+    stars.forEach((star) => {
+        star.addEventListener('mouseover', () => {
+            const rating = star.getAttribute('data-rating');
+            highlightStars(rating);
+        });
+
+        star.addEventListener('click', () => {
+            const rating = star.getAttribute('data-rating');
+            ratingInput.value = rating;
+            highlightStars(rating);
+        });
+
+        star.addEventListener('mouseout', () => {
+            const currentRating = ratingInput.value;
+            highlightStars(currentRating);
+        });
+    });
+
+    function highlightStars(rating) {
+        stars.forEach((star) => {
+            const starRating = star.getAttribute('data-rating');
+            if (starRating <= rating) {
+                star.classList.add('fas');
+                star.classList.remove('far');
+            } else {
+                star.classList.remove('fas');
+                star.classList.add('far');
+            }
+        });
+    }
+
+
     // Product Detail Slider
     $('.product-slider-single').slick({
         infinite: true,
@@ -160,8 +160,8 @@
         focusOnSelect: true,
         asNavFor: '.product-slider-single'
     });
-    
-    
+
+
     // Brand Slider
     $('.brand-slider').slick({
         speed: 5000,
@@ -203,8 +203,8 @@
             }
         ]
     });
-    
-    
+
+
     // Review slider
     $('.review-slider').slick({
         autoplay: true,
@@ -221,8 +221,8 @@
             }
         ]
     });
-    
-    
+
+
     // Widget slider
     $('.sidebar-slider').slick({
         autoplay: true,
@@ -231,8 +231,8 @@
         slidesToShow: 1,
         slidesToScroll: 1
     });
-    
-    
+
+
     // Quantity
     $('.qty button').on('click', function () {
         var $button = $(this);
@@ -248,18 +248,18 @@
         }
         $button.parent().find('input').val(newVal);
     });
-    
-    
+
+
     // Shipping address show hide
     $('.checkout #shipto').change(function () {
-        if($(this).is(':checked')) {
+        if ($(this).is(':checked')) {
             $('.checkout .shipping-address').slideDown();
         } else {
             $('.checkout .shipping-address').slideUp();
         }
     });
-    
-    
+
+
     // Payment methods show hide
     $('.checkout .payment-method .custom-control-input').change(function () {
         if ($(this).prop('checked')) {
@@ -270,42 +270,80 @@
     });
 })(jQuery);
 
-$(document).ready(()=>{
+$(document).ready(() => {
     $('#selectCate').select2({
-        ajax:{
-            url:'/api/categories',
-            dataType:'json'
+        ajax: {
+            url: '/api/categories',
+            dataType: 'json'
         }
     })
 
 
-//let table = new DataTable('#tablaprueba');
+    //let table = new DataTable('#tablaprueba');
 
-$('#btnMostrar').click(() => {
-    let selected=$('#selectCate').select2('data');
-    $('#tablaprueba tbody').empty();
-    $('tablaprueba').DataTable().clear().destroy();
-    $.getJSON("/api/products/"+(selected.length?selected[0].id:""), function (result) {
-        $.each(result, function (i, obj) {
-            $('#tablaprueba > tbody:last-child').append(
-                '<tr>' +
-                '<td>' + obj.id + '</td>' +
-                '<td>' + obj.name + '</td>' +
-                '<td>' + obj.sale_price + '</td>' +
-                '<td>' + obj.category.name + '</td>' +
-                '<td>' + obj.color + '</td>' +
-                '<td>' + obj.size + '</td>' +
-                '</tr>'
-            );
-           
+    $('#btnMostrar').click(() => {
+        let selected = $('#selectCate').select2('data');
+        $('#tablaprueba tbody').empty();
+        $('tablaprueba').DataTable().clear().destroy();
+        $.getJSON("/api/products/" + (selected.length ? selected[0].id : ""), function (result) {
+            $.each(result, function (i, obj) {
+                $('#tablaprueba > tbody:last-child').append(
+                    '<tr>' +
+                    '<td>' + obj.id + '</td>' +
+                    '<td>' + obj.name + '</td>' +
+                    '<td>' + obj.sale_price + '</td>' +
+                    '<td>' + obj.category.name + '</td>' +
+                    '<td>' + obj.color + '</td>' +
+                    '<td>' + obj.size + '</td>' +
+                    '</tr>'
+                );
+
+            });
+            let table = new DataTable('#tablaprueba');
         });
-        let table = new DataTable('#tablaprueba');
     });
 });
+
+//ajax para el consumo de api
+$(document).ready(() => {
+    $('#btnEnviar').click(() => {
+        var Message = $('#message');
+        var MessageError = $('#messageError');
+        var formData = new FormData(document.getElementById("registerForm"));
+        var formDataObject = {};
+        formData.forEach((value, key) => {
+            formDataObject[key] = value;
+        });
+
+        $.ajax({
+            url: 'http://localhost:3000/api/v1/users',
+            method: 'POST',
+            dataType: 'json',
+            processData: false,
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(formDataObject), // Cambio aquí
+            async: true,
+            success: function (response) {
+                Message.text('registration has been submitted successfully');
+                Message.removeClass('d-none');
+                $('#registerForm')[0].reset();
+            },
+            error: function (error) {
+                MessageError.text('registration has failed');
+                MessageError.removeClass('d-none');
+            }
+        });
+
+    });
 });
+
+
+
+
+
 /*$(document).ready(function() {
     const $tablaPrueba = $('#tablaprueba');
-  
+
     const agregarFila = (data) => {
         // Crea una nueva fila y llena las celdas con los datos
         const newRow = $('<tr>');
@@ -319,10 +357,10 @@ $('#btnMostrar').click(() => {
         newRow.append(`<td>${data.size}</td>`);
         newRow.append(`<td>${data.color}</td>`);
         newRow.append(`<td>${data.category.name}</td>`);
-        
+
         $tablaPrueba.find('tbody').append(newRow);
     }
-  
+
     const cargarDatos = () => {
         // Realiza una solicitud AJAX para obtener los datos
         $.ajax({
@@ -331,7 +369,7 @@ $('#btnMostrar').click(() => {
             success: function(response) {
                 // Limpia la tabla antes de agregar nuevos datos
                 $tablaPrueba.find('tbody').empty();
-                
+
                 // Agrega filas a la tabla con los datos obtenidos
                 response.forEach(function(product) {
                     agregarFila(product);
@@ -342,7 +380,7 @@ $('#btnMostrar').click(() => {
             }
         });
     }
-  
+
     $('#agregarBtn').click(cargarDatos); // Reemplaza 'agregarBtn' con el ID del botón de agregar
     $('#eliminarBtn').click(eliminarFila); // Reemplaza 'eliminarBtn' con el ID del botón de eliminar
     //$('#cargarDatosBtn').click(cargarDatos); // Reemplaza 'cargarDatosBtn' con el ID del botón para cargar datos
@@ -371,17 +409,17 @@ $('#btnMostrar').click(() => {
                     <td>${product.sale_price}</td>
                     <td>${product.quantity}</td>
                     <td>${product.size}</td>
-                    <td>${product.color}</td>                    
+                    <td>${product.color}</td>
                     <td>${product.category.name}</td>
                 </tr>`
             );
             // Incrementa el índice para cargar el siguiente registro la próxima vez
             currentIndex++;
-        } 
+        }
     }
     const eliminarFila = () => {
         const rowCount = $tablaPrueba.find('tr').length;
-        
+
         if (rowCount <= 1)
           alert('No se puede eliminar el encabezado');
         else{

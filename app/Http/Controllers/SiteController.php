@@ -133,4 +133,7 @@ class SiteController extends Controller
         $employees = $response->object();
         return view ('e-commerce.admin_employees',compact('employees'));
     }
+    public function registro(){
+        return view('e-commerce.registroUsuario');
+    }
 }
